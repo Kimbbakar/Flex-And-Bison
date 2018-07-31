@@ -11,7 +11,7 @@
 
 %%
 
-[a-zA-Z][a-zA-Z0-9]*    {return T_ID}
+
 [ \t]   ; // ignore all whitespace
 [0-9]+\.[0-9]+          {T_FLOAT;}
 [0-9]+                  {return T_INT;}
@@ -22,6 +22,7 @@
 "-"                     {return T_MINUS;}
 "*"                     {return T_MULTIPLY;}
 "/"                     {return T_DIVIDE;}
+"%"                     {return T_MOD;}
 "("                     {return T_LEFT;}
 ")"                     {return T_RIGHT;}
 "exit"                  {return T_QUIT;}
@@ -29,5 +30,6 @@
 \n                      {return T_NEWLINE;}
 ":="                    {return T_ASSIGN;}
 ","                     {return T_COMA;}
+[a-zA-Z][a-zA-Z0-9]*    {return T_ID;}
 
 %%
