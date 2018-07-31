@@ -6,8 +6,9 @@ extern int yyparse();
 extern FILE* yyin;
 void yyerror(const char* s);
 %}
- 
-%token DTYPE T_INT T_FLOAT T_PLUS T_MINUS T_MULTIPLY T_DIVIDE T_LEFT T_RIGHT SEMI T_ASSIGN T_ID T_COMA T_MOD
+
+%token DTYPE T_INT T_FLOAT T_CHAR T_STR
+%token T_PLUS T_MINUS T_MULTIPLY T_DIVIDE T_MOD T_LEFT T_RIGHT SEMI T_ASSIGN T_ID T_COMA  
 %token T_NEWLINE T_QUIT
 %left T_PLUS T_MINUS
 %left T_MULTIPLY T_DIVIDE
@@ -40,8 +41,11 @@ EXPR:
 
 ;
 
-TERM: T_INT
-	| T_ID
+TERM: T_ID
+	| T_INT
+	| T_STR
+	| T_FLOAT
+	| T_CHAR
 ;
 
 IDLIST: 
