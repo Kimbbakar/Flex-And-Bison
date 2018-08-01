@@ -13,26 +13,26 @@
 
 
 [ \t]   ; // ignore all whitespace
-\".*\"                  {return T_STR;}
-\'.*\'                  {return T_CHAR;}
-[0-9]+\.[0-9]+          {return T_FLOAT;}
-[0-9]+                  {return T_INT;}
-"+"                     {return T_PLUS;}
-"int"                   {return DTYPE;}
-"float"                 {return DTYPE;}
-"char"                  {return DTYPE;}
-"string"                {return DTYPE;} 
-"-"                     {return T_MINUS;}
-"*"                     {return T_MULTIPLY;}
-"/"                     {return T_DIVIDE;}
-"%"                     {return T_MOD;}
-"("                     {return T_LEFT;}
-")"                     {return T_RIGHT;}
+\".*\"                  {printf("STRING = %s\n",yytext); return T_STR;}
+\'.*\'                  {printf("CHAR  = %s\n",yytext);return T_CHAR;}
+[0-9]+\.[0-9]+          {printf("FLOAT = %s\n",yytext);return T_FLOAT;}
+[0-9]+                  {printf("INT = %s\n",yytext);return T_INT;}
+"+"                     {printf("OP = %s\n",yytext); return T_PLUS;}
+"int"                   {printf("TYPE = %s\n",yytext); return DTYPE;}
+"float"                 {printf("TYPE = %s\n",yytext); return DTYPE;}
+"char"                  {printf("TYPE = %s\n",yytext); return DTYPE;}
+"string"                {printf("TYPE = %s\n",yytext); return DTYPE;} 
+"-"                     {printf("OP = %s\n",yytext); return T_MINUS;}
+"*"                     {printf("OP = %s\n",yytext); return T_MULTIPLY;}
+"/"                     {printf("OP = %s\n",yytext); return T_DIVIDE;}
+"%"                     {printf("OP = %s\n",yytext); return T_MOD;}
+"("                     {printf("OP = %s\n",yytext); return T_LEFT;}
+")"                     {printf("OP = %s\n",yytext); return T_RIGHT;}
 "exit"                  {return T_QUIT;}
 ";"                     {return SEMI;}
 \n                      {return T_NEWLINE;}
 ":="                    {return T_ASSIGN;}
 ","                     {return T_COMA;}
-[a-zA-Z][a-zA-Z0-9]*    {return T_ID;}
+[a-zA-Z][a-zA-Z0-9]*    {printf("ID = %s\n",yytext); return T_ID;}
 
 %%
