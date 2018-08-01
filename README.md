@@ -55,7 +55,7 @@ OPTR → + | - | * | / | %
 
 <h3 align = "center">Limitation & Compile Process</h3>
 
-1.  Still, we can store value and operate arithmetic operation.
+1.  Still, we can't store value and operate arithmetic operation.
 
 ~~~
 flex gxx.l
