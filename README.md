@@ -40,17 +40,17 @@ Data types:
 
 In our parser we have tried to replicate the grammer below.
 ~~~
-PROG → STMTS
-STMTS → STMT STMTS | ɛ
-STMT → DTYPE id IDLIST SEMI
-STMT → id := EXPR SEMI
+PROG   → STMTS
+STMTS  → STMT STMTS | ɛ
+STMT   → DTYPE id IDLIST SEMI
+STMT   → id := EXPR SEMI
 IDLIST → , id IDLIST | ɛ
-EXPR → EXPR OPTR TERM | TERM
-EXPR → ( EXPR ) | neg EXPR
-TERM → id | CONST
-DTYPE → int | float | char
-CONST → ilit | rlit | clit | slit
-OPTR → + | - | * | / | %
+EXPR   → EXPR OPTR TERM | TERM
+EXPR   → ( EXPR ) | neg EXPR
+TERM   → id | CONST
+DTYPE  → int | float | char
+CONST  → ilit | rlit | clit | slit
+OPTR   → + | - | * | / | %
 ~~~
 
 <h3 align = "center">Limitation & Compile Process</h3>
