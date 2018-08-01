@@ -13,12 +13,15 @@
 
 
 [ \t]   ; // ignore all whitespace
-[0-9]+\.[0-9]+          {T_FLOAT;}
+\".*\"                  {return T_STR;}
+\'.*\'                  {return T_CHAR;}
+[0-9]+\.[0-9]+          {return T_FLOAT;}
 [0-9]+                  {return T_INT;}
 "+"                     {return T_PLUS;}
 "int"                   {return DTYPE;}
 "float"                 {return DTYPE;}
 "char"                  {return DTYPE;}
+"string"                {return DTYPE;} 
 "-"                     {return T_MINUS;}
 "*"                     {return T_MULTIPLY;}
 "/"                     {return T_DIVIDE;}
