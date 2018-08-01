@@ -1,7 +1,7 @@
 <h1 align = "center">Flex And Bison</h1>
 
 
-<h3 align = "center">Flex</h3>
+<h3 align = "center">Lexer</h3>
 
 Total 21 types of token this lexer can recognize. 
 
