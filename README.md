@@ -57,8 +57,6 @@ SAY    → id | id, IDLIST
 
 <h3 align = "center">Compile Process</h3>
 
-<strike> 1.  Still, we can't store value and operate arithmetic operation.</strike>
-
 ~~~
 flex gxx.l
 bison -dyv gxx.y
@@ -89,5 +87,5 @@ Program End
 
 <h3 align = "center">Limitation</h3>
 
-<strike> 1.  Still, we can't store value and operate arithmetic operation.</strike> Arithmetic operation only allowed for integer.
+<strike> 1.  Still, we can't store value and operate arithmetic operation.</strike> Arithmetic operations only allowed for integer.
 
