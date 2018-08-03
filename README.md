@@ -26,6 +26,7 @@ Data types:
 <li> '+'(Addition)
 <li> '*'(Multiplication)
 <li> '/'(Divide)
+<li> '%'(MOD)
 <li> ':='(Assignment) 
 </ul>
 </li>
@@ -54,7 +55,7 @@ OPTR   → + | - | * | / | %
 SAY    → id | id, IDLIST
 ~~~
 
-<h3 align = "center">Limitation & Compile Process</h3>
+<h3 align = "center">Compile Process</h3>
 
 <strike> 1.  Still, we can't store value and operate arithmetic operation.</strike>
 
@@ -85,4 +86,8 @@ a: 2
 a: 7
 Program End
 ~~~
+
+<h3 align = "center">Limitation</h3>
+
+<strike> 1.  Still, we can't store value and operate arithmetic operation.</strike> Arithmetic operation only allowed for integer.
 
