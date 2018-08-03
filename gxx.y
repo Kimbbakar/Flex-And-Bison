@@ -46,7 +46,7 @@ PROG: STMTS
 ;
 
 STMTS: STMT T_NEWLINE STMTS 
-	| T_QUIT T_NEWLINE 					{ printf("Program Ends\n"); exit(0) ;}
+	| T_QUIT SEMI T_NEWLINE 			{ printf("Program End\n"); exit(0) ;}
 	| SAY SAYLIST SEMI T_NEWLINE STMTS		
 ;
 
