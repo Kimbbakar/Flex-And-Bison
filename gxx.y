@@ -8,6 +8,8 @@ extern int yyparse();
 extern FILE* yyin;
 void yyerror(const char* s);
 void addVariable(char *name);
+void setvalue(char * name,int val);
+int getvalue(char * name);
 %}
 
 %union {
@@ -23,17 +25,17 @@ void addVariable(char *name);
 %token<fl> T_FLOAT 
 %token<ch> T_CHAR 
 %token<INT> T_INT 
-%token T_STR
-%token T_MOD SEMI T_ASSIGN T_COMA  
-%token T_NEWLINE T_QUIT 
+%token T_STR SAY T_MOD SEMI T_ASSIGN T_COMA T_NEWLINE T_QUIT 
 %token<str> T_ID
+
+%type <INT> EXPR TERM
 
 
 %left T_MINUS 
 %left T_PLUS
 %left T_MULTIPLY 
 %left T_DIVIDE   
-%left T_LEFT T_RIGHT
+%left T_LEFT T_RIGHT 
 
 
 %start PROG
@@ -44,37 +46,30 @@ PROG: STMTS
 ;
 
 STMTS: STMT T_NEWLINE STMTS 
-	| T_QUIT T_NEWLINE { printf("Program Ends\n"); exit(0) ;}
+	| T_QUIT T_NEWLINE 					{ printf("Program Ends\n"); exit(0) ;}
+	| SAY SAYLIST SEMI T_NEWLINE STMTS		
 ;
 
-STMT: DTYPE IDLIST SEMI {printf("Accepted\n");   }
-	| T_ID T_ASSIGN EXPR SEMI  {printf("Accepted\n");   }
+SAYLIST: T_ID  							{printf("%s: %d\n",$1,getvalue($1) );}
+	| T_ID T_COMA SAYLIST				{printf("%s: %d\n",$1,getvalue($1) );}
 ;
 
-EXPR: 
-	| T_MINUS TERM EXPR
-	| T_LEFT EXPR T_RIGHT EXPR
-	| TERM
-	| TERM T_PLUS EXPR
-	| TERM T_MINUS EXPR	
-	| TERM T_MULTIPLY EXPR
-	| TERM T_DIVIDE EXPR 
-	| TERM T_MOD EXPR 
+STMT: DTYPE IDLIST SEMI 				{printf("Accepted\n");   }
+	| T_ID T_ASSIGN EXPR SEMI  			{setvalue($1,$3)  ;printf("Accepted\n");   }
+;
 
+EXPR: TERM								{$$ = $1;}
+;
+ 
+
+TERM: T_INT 
+;
+
+IDLIST: T_ID  							{addVariable($1);}
+	| T_ID T_COMA IDLIST				{addVariable($1);}
 
 ;
 
-TERM: T_ID
-	| T_INT
-	| T_STR
-	| T_FLOAT
-	| T_CHAR
-;
-
-IDLIST: T_ID  						{addVariable($1);}
-	| T_ID T_COMA IDLIST			{addVariable($1);}
-
-;
 
 
 %%
@@ -96,14 +91,39 @@ int typeofvariable[102];
 int value[102];
 
 void addVariable(char *name){
-	int i =0;
+	int i =0; 
 	for(i=0;i<countVariable;i++){
-		if(strcmp(name,NameOfVariable[i] )==0 ){
+		if(strcmp(name,NameOfVariable[i] )==0 ){ 
 			yyerror(strcat(name, ": Declare more than once!!"));
 		}
 	}
 
-	NameOfVariable[countVariable] = name;
+	NameOfVariable[countVariable] = strdup(name);
+	value[countVariable] = 0;
 	countVariable++;
 }
  
+int getvalue(char * name){
+	int i =0;
+	for(i=0;i<countVariable;i++){
+		if(strcmp(name,NameOfVariable[i] )==0 ){
+			return value[i];
+		}
+	}
+
+	yyerror(strcat(name, ": Does not exist!!"));	
+	
+}
+
+void setvalue(char * name,int val){
+	int i =0;
+	for(i=0;i<countVariable;i++){
+		if(strcmp(name,NameOfVariable[i] )==0 ){
+			value[i] = val;
+			return ;
+		}
+	}
+
+	yyerror(strcat(name, ": Does not exist!!"));	
+	
+}
