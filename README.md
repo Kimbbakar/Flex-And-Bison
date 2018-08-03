@@ -51,15 +51,38 @@ TERM   → id | CONST
 DTYPE  → int | float | char
 CONST  → ilit | rlit | clit | slit
 OPTR   → + | - | * | / | %
+SAY    → id | id, IDLIST
 ~~~
 
 <h3 align = "center">Limitation & Compile Process</h3>
 
-1.  Still, we can't store value and operate arithmetic operation.
+<strike> 1.  Still, we can't store value and operate arithmetic operation.</strike>
 
 ~~~
 flex gxx.l
 bison -dyv gxx.y
 gcc lex.yy.c y.tab.c -o gxx.exe
+~~~
+
+<h3 align = "center">Sample Program</h3>
+<b>Input:</b>
+
+~~~
+int a,b;
+a := 2;
+b := 3;
+SAY: a,b;
+a := a * a;
+a := a + b;
+SAY: a;
+exit;
+~~~
+
+<b>Output:</b>
+~~~
+b: 3
+a: 2
+a: 7
+Program End
 ~~~
 
