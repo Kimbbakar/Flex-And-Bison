@@ -62,6 +62,14 @@ EXPR: TERM								{$$ = $1;}
     | T_MINUS TERM 						{$$ = -$2;}
     | T_ID         						{$$ = getvalue($1);}                     
     | T_MINUS T_ID 						{$$ = -getvalue($2);} 
+    | T_LEFT EXPR T_RIGHT				{$$ = $2;} 
+    | EXPR T_PLUS EXPR					{$$ = $1 + $3;}
+    | EXPR T_MINUS EXPR					{$$ = $1 - $3;}
+    | EXPR T_MULTIPLY EXPR				{$$ = $1 * $3;}
+    | EXPR T_DIVIDE EXPR				{if($3==0)yyerror("Divide by zero not allowed!!") ;else $$ = $1 / $3;}
+    | EXPR T_MOD EXPR					{if($3==0)yyerror("MOD by zero not allowed!!") ;else $$ = $1 % $3;} 
+
+
 ;
  
 
@@ -119,10 +127,10 @@ int getvalue(char * name){
 }
 
 void setvalue(char * name,int val){
-	int i =0;
+	int i =0; 
 	for(i=0;i<countVariable;i++){
 		if(strcmp(name,NameOfVariable[i] )==0 ){
-			value[i] = val;
+			value[i] = val; 
 			return ;
 		}
 	}

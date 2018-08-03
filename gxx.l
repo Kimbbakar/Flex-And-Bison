@@ -17,7 +17,7 @@
 \".*\"                  {printf("STRING = %s\n",yytext); return T_STR;}
 \'.*\'                  {printf("CHAR  = %s\n",yytext);return T_CHAR;}
 [0-9]+\.[0-9]+          {printf("FLOAT = %s\n",yytext);return T_FLOAT;}
-[1-9][0-9]+                  {printf("INT = %s\n",yytext);yylval.INT = atoi(yytext) ; return T_INT;}
+[1-9][0-9]*                  {printf("INT = %s\n",yytext);yylval.INT = atoi(yytext) ; return T_INT;}
 "+"                     {printf("OP = %s\n",yytext); return T_PLUS;}
 "SAY:"					{return SAY;}
 "int"                   {printf("TYPE = %s\n",yytext); return DTYPE;}
