@@ -59,6 +59,9 @@ STMT: DTYPE IDLIST SEMI 				{printf("Accepted\n");   }
 ;
 
 EXPR: TERM								{$$ = $1;}
+    | T_MINUS TERM 						{$$ = -$2;}
+    | T_ID         						{$$ = getvalue($1);}                     
+    | T_MINUS T_ID 						{$$ = -getvalue($2);} 
 ;
  
 
