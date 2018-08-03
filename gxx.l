@@ -16,7 +16,7 @@
 \".*\"                  {printf("STRING = %s\n",yytext); return T_STR;}
 \'.*\'                  {printf("CHAR  = %s\n",yytext);return T_CHAR;}
 [0-9]+\.[0-9]+          {printf("FLOAT = %s\n",yytext);return T_FLOAT;}
-[0-9]+                  {printf("INT = %s\n",yytext);return T_INT;}
+[1-9][0-9]+                  {printf("INT = %s\n",yytext);yylval.INT = atof(yytext) ; return T_INT;}
 "+"                     {printf("OP = %s\n",yytext); return T_PLUS;}
 "int"                   {printf("TYPE = %s\n",yytext); return DTYPE;}
 "float"                 {printf("TYPE = %s\n",yytext); return DTYPE;}
@@ -34,5 +34,5 @@
 ":="                    {return T_ASSIGN;}
 ","                     {return T_COMA;}
 [a-zA-Z][a-zA-Z0-9]*    {printf("ID = %s\n",yytext); return T_ID;}
-
+.						{yyerror("Not Accepted") ;}
 %%

@@ -4,55 +4,54 @@ Grammar
 
     1 PROG: STMTS
 
-    2 STMTS: T_NEWLINE
-    3      | STMT T_NEWLINE STMTS
-    4      | T_QUIT T_NEWLINE
+    2 STMTS: STMT T_NEWLINE STMTS
+    3      | T_QUIT T_NEWLINE
 
-    5 STMT: DTYPE T_ID IDLIST SEMI
-    6     | T_ID T_ASSIGN EXPR SEMI
+    4 STMT: DTYPE T_ID IDLIST SEMI
+    5     | T_ID T_ASSIGN EXPR SEMI
 
-    7 EXPR: /* empty */
-    8     | T_MINUS TERM EXPR
-    9     | T_LEFT EXPR T_RIGHT EXPR
-   10     | TERM
-   11     | TERM T_PLUS EXPR
-   12     | TERM T_MINUS EXPR
-   13     | TERM T_MULTIPLY EXPR
-   14     | TERM T_DIVIDE EXPR
-   15     | TERM T_MOD EXPR
+    6 EXPR: /* empty */
+    7     | T_MINUS TERM EXPR
+    8     | T_LEFT EXPR T_RIGHT EXPR
+    9     | TERM
+   10     | TERM T_PLUS EXPR
+   11     | TERM T_MINUS EXPR
+   12     | TERM T_MULTIPLY EXPR
+   13     | TERM T_DIVIDE EXPR
+   14     | TERM T_MOD EXPR
 
-   16 TERM: T_ID
-   17     | T_INT
-   18     | T_STR
-   19     | T_FLOAT
-   20     | T_CHAR
+   15 TERM: T_ID
+   16     | T_INT
+   17     | T_STR
+   18     | T_FLOAT
+   19     | T_CHAR
 
-   21 IDLIST: /* empty */
-   22       | T_COMA T_ID IDLIST
+   20 IDLIST: /* empty */
+   21       | T_COMA T_ID IDLIST
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-DTYPE (258) 5
-T_INT (259) 17
-T_FLOAT (260) 19
-T_CHAR (261) 20
-T_STR (262) 18
-T_PLUS (263) 11
-T_MINUS (264) 8 12
-T_MULTIPLY (265) 13
-T_DIVIDE (266) 14
-T_MOD (267) 15
-T_LEFT (268) 9
-T_RIGHT (269) 9
-SEMI (270) 5 6
-T_ASSIGN (271) 6
-T_ID (272) 5 6 16 22
-T_COMA (273) 22
-T_NEWLINE (274) 2 3 4
-T_QUIT (275) 4
+DTYPE (258) 4
+T_FLOAT (259) 18
+T_CHAR (260) 19
+T_INT (261) 16
+T_STR (262) 17
+T_MOD (263) 14
+SEMI (264) 4 5
+T_ASSIGN (265) 5
+T_ID (266) 4 5 15 21
+T_COMA (267) 21
+T_NEWLINE (268) 2 3
+T_QUIT (269) 3
+T_MINUS (270) 7 11
+T_PLUS (271) 10
+T_MULTIPLY (272) 12
+T_DIVIDE (273) 13
+T_RIGHT (274) 8
+T_LEFT (275) 8
 
 
 Nonterminals, with rules where they appear
@@ -62,457 +61,448 @@ $accept (21)
 PROG (22)
     on left: 1, on right: 0
 STMTS (23)
-    on left: 2 3 4, on right: 1 3
+    on left: 2 3, on right: 1 2
 STMT (24)
-    on left: 5 6, on right: 3
+    on left: 4 5, on right: 2
 EXPR (25)
-    on left: 7 8 9 10 11 12 13 14 15, on right: 6 8 9 11 12 13 14 15
+    on left: 6 7 8 9 10 11 12 13 14, on right: 5 7 8 10 11 12 13 14
 TERM (26)
-    on left: 16 17 18 19 20, on right: 8 10 11 12 13 14 15
+    on left: 15 16 17 18 19, on right: 7 9 10 11 12 13 14
 IDLIST (27)
-    on left: 21 22, on right: 5 22
+    on left: 20 21, on right: 4 21
 
 
 state 0
 
     0 $accept: . PROG $end
 
-    DTYPE      shift, and go to state 1
-    T_ID       shift, and go to state 2
-    T_NEWLINE  shift, and go to state 3
-    T_QUIT     shift, and go to state 4
+    DTYPE   shift, and go to state 1
+    T_ID    shift, and go to state 2
+    T_QUIT  shift, and go to state 3
 
-    PROG   go to state 5
-    STMTS  go to state 6
-    STMT   go to state 7
+    PROG   go to state 4
+    STMTS  go to state 5
+    STMT   go to state 6
 
 
 state 1
 
-    5 STMT: DTYPE . T_ID IDLIST SEMI
+    4 STMT: DTYPE . T_ID IDLIST SEMI
 
-    T_ID  shift, and go to state 8
+    T_ID  shift, and go to state 7
 
 
 state 2
 
-    6 STMT: T_ID . T_ASSIGN EXPR SEMI
+    5 STMT: T_ID . T_ASSIGN EXPR SEMI
 
-    T_ASSIGN  shift, and go to state 9
+    T_ASSIGN  shift, and go to state 8
 
 
 state 3
 
-    2 STMTS: T_NEWLINE .
+    3 STMTS: T_QUIT . T_NEWLINE
 
-    $default  reduce using rule 2 (STMTS)
+    T_NEWLINE  shift, and go to state 9
 
 
 state 4
 
-    4 STMTS: T_QUIT . T_NEWLINE
+    0 $accept: PROG . $end
 
-    T_NEWLINE  shift, and go to state 10
+    $end  shift, and go to state 10
 
 
 state 5
-
-    0 $accept: PROG . $end
-
-    $end  shift, and go to state 11
-
-
-state 6
 
     1 PROG: STMTS .
 
     $default  reduce using rule 1 (PROG)
 
 
+state 6
+
+    2 STMTS: STMT . T_NEWLINE STMTS
+
+    T_NEWLINE  shift, and go to state 11
+
+
 state 7
 
-    3 STMTS: STMT . T_NEWLINE STMTS
+    4 STMT: DTYPE T_ID . IDLIST SEMI
 
-    T_NEWLINE  shift, and go to state 12
+    T_COMA  shift, and go to state 12
+
+    $default  reduce using rule 20 (IDLIST)
+
+    IDLIST  go to state 13
 
 
 state 8
 
-    5 STMT: DTYPE T_ID . IDLIST SEMI
+    5 STMT: T_ID T_ASSIGN . EXPR SEMI
 
-    T_COMA  shift, and go to state 13
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
+    T_MINUS  shift, and go to state 19
+    T_LEFT   shift, and go to state 20
 
-    $default  reduce using rule 21 (IDLIST)
+    $default  reduce using rule 6 (EXPR)
 
-    IDLIST  go to state 14
+    EXPR  go to state 21
+    TERM  go to state 22
 
 
 state 9
 
-    6 STMT: T_ID T_ASSIGN . EXPR SEMI
+    3 STMTS: T_QUIT T_NEWLINE .
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
-    T_MINUS  shift, and go to state 19
-    T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
-
-    $default  reduce using rule 7 (EXPR)
-
-    EXPR  go to state 22
-    TERM  go to state 23
+    $default  reduce using rule 3 (STMTS)
 
 
 state 10
-
-    4 STMTS: T_QUIT T_NEWLINE .
-
-    $default  reduce using rule 4 (STMTS)
-
-
-state 11
 
     0 $accept: PROG $end .
 
     $default  accept
 
 
+state 11
+
+    2 STMTS: STMT T_NEWLINE . STMTS
+
+    DTYPE   shift, and go to state 1
+    T_ID    shift, and go to state 2
+    T_QUIT  shift, and go to state 3
+
+    STMTS  go to state 23
+    STMT   go to state 6
+
+
 state 12
 
-    3 STMTS: STMT T_NEWLINE . STMTS
+   21 IDLIST: T_COMA . T_ID IDLIST
 
-    DTYPE      shift, and go to state 1
-    T_ID       shift, and go to state 2
-    T_NEWLINE  shift, and go to state 3
-    T_QUIT     shift, and go to state 4
-
-    STMTS  go to state 24
-    STMT   go to state 7
+    T_ID  shift, and go to state 24
 
 
 state 13
 
-   22 IDLIST: T_COMA . T_ID IDLIST
+    4 STMT: DTYPE T_ID IDLIST . SEMI
 
-    T_ID  shift, and go to state 25
+    SEMI  shift, and go to state 25
 
 
 state 14
 
-    5 STMT: DTYPE T_ID IDLIST . SEMI
-
-    SEMI  shift, and go to state 26
-
-
-state 15
-
-   17 TERM: T_INT .
-
-    $default  reduce using rule 17 (TERM)
-
-
-state 16
-
-   19 TERM: T_FLOAT .
-
-    $default  reduce using rule 19 (TERM)
-
-
-state 17
-
-   20 TERM: T_CHAR .
-
-    $default  reduce using rule 20 (TERM)
-
-
-state 18
-
-   18 TERM: T_STR .
+   18 TERM: T_FLOAT .
 
     $default  reduce using rule 18 (TERM)
 
 
-state 19
+state 15
 
-    8 EXPR: T_MINUS . TERM EXPR
+   19 TERM: T_CHAR .
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
-    T_ID     shift, and go to state 21
-
-    TERM  go to state 27
+    $default  reduce using rule 19 (TERM)
 
 
-state 20
+state 16
 
-    9 EXPR: T_LEFT . EXPR T_RIGHT EXPR
-
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
-    T_MINUS  shift, and go to state 19
-    T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
-
-    $default  reduce using rule 7 (EXPR)
-
-    EXPR  go to state 28
-    TERM  go to state 23
-
-
-state 21
-
-   16 TERM: T_ID .
+   16 TERM: T_INT .
 
     $default  reduce using rule 16 (TERM)
 
 
+state 17
+
+   17 TERM: T_STR .
+
+    $default  reduce using rule 17 (TERM)
+
+
+state 18
+
+   15 TERM: T_ID .
+
+    $default  reduce using rule 15 (TERM)
+
+
+state 19
+
+    7 EXPR: T_MINUS . TERM EXPR
+
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
+
+    TERM  go to state 26
+
+
+state 20
+
+    8 EXPR: T_LEFT . EXPR T_RIGHT EXPR
+
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
+    T_MINUS  shift, and go to state 19
+    T_LEFT   shift, and go to state 20
+
+    $default  reduce using rule 6 (EXPR)
+
+    EXPR  go to state 27
+    TERM  go to state 22
+
+
+state 21
+
+    5 STMT: T_ID T_ASSIGN EXPR . SEMI
+
+    SEMI  shift, and go to state 28
+
+
 state 22
 
-    6 STMT: T_ID T_ASSIGN EXPR . SEMI
+    9 EXPR: TERM .
+   10     | TERM . T_PLUS EXPR
+   11     | TERM . T_MINUS EXPR
+   12     | TERM . T_MULTIPLY EXPR
+   13     | TERM . T_DIVIDE EXPR
+   14     | TERM . T_MOD EXPR
 
-    SEMI  shift, and go to state 29
+    T_MOD       shift, and go to state 29
+    T_MINUS     shift, and go to state 30
+    T_PLUS      shift, and go to state 31
+    T_MULTIPLY  shift, and go to state 32
+    T_DIVIDE    shift, and go to state 33
+
+    $default  reduce using rule 9 (EXPR)
 
 
 state 23
 
-   10 EXPR: TERM .
-   11     | TERM . T_PLUS EXPR
-   12     | TERM . T_MINUS EXPR
-   13     | TERM . T_MULTIPLY EXPR
-   14     | TERM . T_DIVIDE EXPR
-   15     | TERM . T_MOD EXPR
+    2 STMTS: STMT T_NEWLINE STMTS .
 
-    T_PLUS      shift, and go to state 30
-    T_MINUS     shift, and go to state 31
-    T_MULTIPLY  shift, and go to state 32
-    T_DIVIDE    shift, and go to state 33
-    T_MOD       shift, and go to state 34
-
-    $default  reduce using rule 10 (EXPR)
+    $default  reduce using rule 2 (STMTS)
 
 
 state 24
 
-    3 STMTS: STMT T_NEWLINE STMTS .
+   21 IDLIST: T_COMA T_ID . IDLIST
 
-    $default  reduce using rule 3 (STMTS)
+    T_COMA  shift, and go to state 12
+
+    $default  reduce using rule 20 (IDLIST)
+
+    IDLIST  go to state 34
 
 
 state 25
 
-   22 IDLIST: T_COMA T_ID . IDLIST
+    4 STMT: DTYPE T_ID IDLIST SEMI .
 
-    T_COMA  shift, and go to state 13
-
-    $default  reduce using rule 21 (IDLIST)
-
-    IDLIST  go to state 35
+    $default  reduce using rule 4 (STMT)
 
 
 state 26
 
-    5 STMT: DTYPE T_ID IDLIST SEMI .
+    7 EXPR: T_MINUS TERM . EXPR
 
-    $default  reduce using rule 5 (STMT)
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
+    T_MINUS  shift, and go to state 19
+    T_LEFT   shift, and go to state 20
+
+    $default  reduce using rule 6 (EXPR)
+
+    EXPR  go to state 35
+    TERM  go to state 22
 
 
 state 27
 
-    8 EXPR: T_MINUS TERM . EXPR
+    8 EXPR: T_LEFT EXPR . T_RIGHT EXPR
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
-    T_MINUS  shift, and go to state 19
-    T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
-
-    $default  reduce using rule 7 (EXPR)
-
-    EXPR  go to state 36
-    TERM  go to state 23
+    T_RIGHT  shift, and go to state 36
 
 
 state 28
 
-    9 EXPR: T_LEFT EXPR . T_RIGHT EXPR
+    5 STMT: T_ID T_ASSIGN EXPR SEMI .
 
-    T_RIGHT  shift, and go to state 37
+    $default  reduce using rule 5 (STMT)
 
 
 state 29
 
-    6 STMT: T_ID T_ASSIGN EXPR SEMI .
+   14 EXPR: TERM T_MOD . EXPR
 
-    $default  reduce using rule 6 (STMT)
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
+    T_MINUS  shift, and go to state 19
+    T_LEFT   shift, and go to state 20
+
+    $default  reduce using rule 6 (EXPR)
+
+    EXPR  go to state 37
+    TERM  go to state 22
 
 
 state 30
 
-   11 EXPR: TERM T_PLUS . EXPR
+   11 EXPR: TERM T_MINUS . EXPR
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
     T_MINUS  shift, and go to state 19
     T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
 
-    $default  reduce using rule 7 (EXPR)
+    $default  reduce using rule 6 (EXPR)
 
     EXPR  go to state 38
-    TERM  go to state 23
+    TERM  go to state 22
 
 
 state 31
 
-   12 EXPR: TERM T_MINUS . EXPR
+   10 EXPR: TERM T_PLUS . EXPR
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
     T_MINUS  shift, and go to state 19
     T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
 
-    $default  reduce using rule 7 (EXPR)
+    $default  reduce using rule 6 (EXPR)
 
     EXPR  go to state 39
-    TERM  go to state 23
+    TERM  go to state 22
 
 
 state 32
 
-   13 EXPR: TERM T_MULTIPLY . EXPR
+   12 EXPR: TERM T_MULTIPLY . EXPR
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
     T_MINUS  shift, and go to state 19
     T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
 
-    $default  reduce using rule 7 (EXPR)
+    $default  reduce using rule 6 (EXPR)
 
     EXPR  go to state 40
-    TERM  go to state 23
+    TERM  go to state 22
 
 
 state 33
 
-   14 EXPR: TERM T_DIVIDE . EXPR
+   13 EXPR: TERM T_DIVIDE . EXPR
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
     T_MINUS  shift, and go to state 19
     T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
 
-    $default  reduce using rule 7 (EXPR)
+    $default  reduce using rule 6 (EXPR)
 
     EXPR  go to state 41
-    TERM  go to state 23
+    TERM  go to state 22
 
 
 state 34
 
-   15 EXPR: TERM T_MOD . EXPR
+   21 IDLIST: T_COMA T_ID IDLIST .
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
-    T_MINUS  shift, and go to state 19
-    T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
-
-    $default  reduce using rule 7 (EXPR)
-
-    EXPR  go to state 42
-    TERM  go to state 23
+    $default  reduce using rule 21 (IDLIST)
 
 
 state 35
 
-   22 IDLIST: T_COMA T_ID IDLIST .
+    7 EXPR: T_MINUS TERM EXPR .
 
-    $default  reduce using rule 22 (IDLIST)
+    $default  reduce using rule 7 (EXPR)
 
 
 state 36
 
-    8 EXPR: T_MINUS TERM EXPR .
+    8 EXPR: T_LEFT EXPR T_RIGHT . EXPR
 
-    $default  reduce using rule 8 (EXPR)
+    T_FLOAT  shift, and go to state 14
+    T_CHAR   shift, and go to state 15
+    T_INT    shift, and go to state 16
+    T_STR    shift, and go to state 17
+    T_ID     shift, and go to state 18
+    T_MINUS  shift, and go to state 19
+    T_LEFT   shift, and go to state 20
+
+    $default  reduce using rule 6 (EXPR)
+
+    EXPR  go to state 42
+    TERM  go to state 22
 
 
 state 37
 
-    9 EXPR: T_LEFT EXPR T_RIGHT . EXPR
+   14 EXPR: TERM T_MOD EXPR .
 
-    T_INT    shift, and go to state 15
-    T_FLOAT  shift, and go to state 16
-    T_CHAR   shift, and go to state 17
-    T_STR    shift, and go to state 18
-    T_MINUS  shift, and go to state 19
-    T_LEFT   shift, and go to state 20
-    T_ID     shift, and go to state 21
-
-    $default  reduce using rule 7 (EXPR)
-
-    EXPR  go to state 43
-    TERM  go to state 23
+    $default  reduce using rule 14 (EXPR)
 
 
 state 38
 
-   11 EXPR: TERM T_PLUS EXPR .
+   11 EXPR: TERM T_MINUS EXPR .
 
     $default  reduce using rule 11 (EXPR)
 
 
 state 39
 
-   12 EXPR: TERM T_MINUS EXPR .
+   10 EXPR: TERM T_PLUS EXPR .
 
-    $default  reduce using rule 12 (EXPR)
+    $default  reduce using rule 10 (EXPR)
 
 
 state 40
 
-   13 EXPR: TERM T_MULTIPLY EXPR .
+   12 EXPR: TERM T_MULTIPLY EXPR .
 
-    $default  reduce using rule 13 (EXPR)
+    $default  reduce using rule 12 (EXPR)
 
 
 state 41
 
-   14 EXPR: TERM T_DIVIDE EXPR .
+   13 EXPR: TERM T_DIVIDE EXPR .
 
-    $default  reduce using rule 14 (EXPR)
+    $default  reduce using rule 13 (EXPR)
 
 
 state 42
 
-   15 EXPR: TERM T_MOD EXPR .
+    8 EXPR: T_LEFT EXPR T_RIGHT EXPR .
 
-    $default  reduce using rule 15 (EXPR)
-
-
-state 43
-
-    9 EXPR: T_LEFT EXPR T_RIGHT EXPR .
-
-    $default  reduce using rule 9 (EXPR)
+    $default  reduce using rule 8 (EXPR)

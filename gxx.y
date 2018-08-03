@@ -7,11 +7,28 @@ extern FILE* yyin;
 void yyerror(const char* s);
 %}
 
-%token DTYPE T_INT T_FLOAT T_CHAR T_STR
-%token T_PLUS T_MINUS T_MULTIPLY T_DIVIDE T_MOD T_LEFT T_RIGHT SEMI T_ASSIGN T_ID T_COMA  
-%token T_NEWLINE T_QUIT
-%left T_PLUS T_MINUS
-%left T_MULTIPLY T_DIVIDE
+%union {
+	int INT;
+	char ch;
+	float fl; 
+}
+
+
+
+%token<INT> DTYPE 
+%token<fl> T_FLOAT 
+%token<ch> T_CHAR 
+%token T_INT T_STR
+%token T_MOD SEMI T_ASSIGN T_ID T_COMA  
+%token T_NEWLINE T_QUIT 
+
+
+%left T_MINUS 
+%left T_PLUS
+%left T_MULTIPLY 
+%left T_DIVIDE   
+%left T_LEFT T_RIGHT
+
 
 %start PROG
 
@@ -20,13 +37,12 @@ PROG: STMTS
 	
 ;
 
-STMTS: T_NEWLINE {printf("ACCEPTED\n"); return 0; }
-	| STMT T_NEWLINE STMTS 
+STMTS: STMT T_NEWLINE STMTS 
 	| T_QUIT T_NEWLINE { printf("Program Ends\n"); exit(0) ;}
 ;
 
-STMT: DTYPE T_ID IDLIST SEMI
-	| T_ID T_ASSIGN EXPR SEMI  
+STMT: DTYPE T_ID IDLIST SEMI {printf("Accepted\n");   }
+	| T_ID T_ASSIGN EXPR SEMI  {printf("Accepted\n");   }
 ;
 
 EXPR: 
@@ -64,6 +80,8 @@ int main() {
 	return 0;
 }
 void yyerror(const char* s) {
+//	printf("Not Accepted\n"); 
 	fprintf(stderr, "Parse error: %s\n", s);
+	//return ;
 	exit(1);
 }
