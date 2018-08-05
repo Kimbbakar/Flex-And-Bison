@@ -28,7 +28,7 @@ Data types:
 <li> '/'(Divide)
 <li> '%'(MOD)
 <li> ':='(Assignment) 
-<li> '==', '<','<=','>','>=' (Binary Condition) 
+<li> '==', '<', '<=', '>', '>=' (Binary Condition) 
 </ul> 
 </li>
 
@@ -52,7 +52,7 @@ EXPR   → ( EXPR ) | neg EXPR
 TERM   → id | CONST
 DTYPE  → int | float | char
 CONST  → ilit | rlit | clit | slit
-OPTR   → + | - | * | / | %
+OPTR   → + | - | * | / | % | '==' | '<' | '<=' | '>' | '>='
 SAY    → id | id, IDLIST
 ~~~
 
