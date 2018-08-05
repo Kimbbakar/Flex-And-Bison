@@ -10,6 +10,8 @@ void yyerror(const char* s);
 void addVariable(char *name);
 void setvalue(char * name,int val);
 int getvalue(char * name);
+void printFunc();
+void pushInStack(char * name,int val );
 %}
 
 %union {
@@ -47,15 +49,16 @@ PROG: STMTS
 
 STMTS: STMT T_NEWLINE STMTS 
 	| T_QUIT SEMI T_NEWLINE 			{ printf("Program End\n"); exit(0) ;}
-	| SAY SAYLIST SEMI T_NEWLINE STMTS		
+	| T_QUIT SEMI 			 			{ printf("Program End\n"); exit(0) ;}
 ;
 
-SAYLIST: T_ID  							{printf("%s: %d\n",$1,getvalue($1) );}
-	| T_ID T_COMA SAYLIST				{printf("%s: %d\n",$1,getvalue($1) );}
+SAYLIST: T_ID SEMI						{pushInStack($1,getvalue($1));}
+	| T_ID T_COMA SAYLIST				{pushInStack($1,getvalue($1));}
 ;
 
-STMT: DTYPE IDLIST SEMI 				{printf("Accepted\n");   }
-	| T_ID T_ASSIGN EXPR SEMI  			{setvalue($1,$3)  ;printf("Accepted\n");   }
+STMT: DTYPE IDLIST SEMI 				{printf("Accepted\n");}
+	| T_ID T_ASSIGN EXPR SEMI  			{printf("Accepted\n");setvalue($1,$3);}
+	| SAY SAYLIST						{printf("Accepted\n");printFunc();}	
 ;
 
 EXPR: TERM								{$$ = $1;}
@@ -100,6 +103,8 @@ int countVariable=0;
 char* NameOfVariable[102];
 int typeofvariable[102];
 int value[102];
+int stackValue[103],item=0;
+char* stackName[103];
 
 void addVariable(char *name){
 	int i =0; 
@@ -137,4 +142,19 @@ void setvalue(char * name,int val){
 
 	yyerror(strcat(name, ": Does not exist!!"));	
 	
+}
+
+
+void printFunc(){
+	while(item){
+		item--;
+		printf("%s: %d\n",stackName[item],stackValue[item] );	
+	}
+
+}
+
+void pushInStack(char *name,int val){
+	stackName[item]  = strdup(name);
+	stackValue[item] = val;
+	item++;
 }
