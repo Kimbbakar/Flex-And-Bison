@@ -28,7 +28,8 @@ Data types:
 <li> '/'(Divide)
 <li> '%'(MOD)
 <li> ':='(Assignment) 
-</ul> '==', '<','<=','>','>=' (Binary Condition)
+<li> '==', '<','<=','>','>=' (Binary Condition) 
+</ul> 
 </li>
 
 <li>We Skip space (' '), tab (\t), and new line (\n) </li>
