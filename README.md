@@ -26,6 +26,7 @@ Data types:
 <li> '+'(Addition)
 <li> '*'(Multiplication)
 <li> '/'(Divide)
+<li> '%'(MOD)
 <li> ':='(Assignment) 
 </ul>
 </li>
@@ -51,15 +52,40 @@ TERM   → id | CONST
 DTYPE  → int | float | char
 CONST  → ilit | rlit | clit | slit
 OPTR   → + | - | * | / | %
+SAY    → id | id, IDLIST
 ~~~
 
-<h3 align = "center">Limitation & Compile Process</h3>
-
-1.  Still, we can't store value and operate arithmetic operation.
+<h3 align = "center">Compile Process</h3>
 
 ~~~
 flex gxx.l
 bison -dyv gxx.y
 gcc lex.yy.c y.tab.c -o gxx.exe
 ~~~
+
+<h3 align = "center">Sample Program</h3>
+<b>Input:</b>
+
+~~~
+int a,b;
+a := 2;
+b := 3;
+SAY: a,b;
+a := a * a;
+a := a + b;
+SAY: a;
+exit;
+~~~
+
+<b>Output:</b>
+~~~
+b: 3
+a: 2
+a: 7
+Program End
+~~~
+
+<h3 align = "center">Limitation</h3>
+
+<strike> 1.  Still, we can't store value and operate arithmetic operation.</strike> Arithmetic operations only allowed for integer.
 
