@@ -1,8 +1,35 @@
+int a;
+int b;
+int c;
+
+a := 1;
+b := 2;
+c := (a<b);
+SAY: c;
+c := (a<=b);
+SAY: c;
+ 
+c := (a>b);
+SAY: c;
+c := (a>=b);
+SAY: c;
+c := (a==b);
+SAY: c;
+exit;
+
+Test Program 2:
+int a;
+a := ( ( (2 + 3) / 1 ) - 4 ) * 10;
+SAY: a;
+exit;
+
+
+Test Program 1:
 int a,b;
 a := 2;
 b := 1;
 SAY: a,b;
 a := a / b;
-a := a + b;
+a := (a + b);
 SAY: a;
 exit;

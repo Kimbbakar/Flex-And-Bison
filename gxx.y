@@ -37,7 +37,7 @@ void pushInStack(char * name,int val );
 %left T_PLUS
 %left T_MULTIPLY 
 %left T_DIVIDE   
-%left T_LEFT T_RIGHT 
+%left T_LEFT T_RIGHT T_LESS T_GREATER T_EQUAL T_LE T_GE
 
 
 %start PROG
@@ -50,6 +50,7 @@ PROG: STMTS
 STMTS: STMT T_NEWLINE STMTS 
 	| T_QUIT SEMI T_NEWLINE 			{ printf("Program End\n"); exit(0) ;}
 	| T_QUIT SEMI 			 			{ printf("Program End\n"); exit(0) ;}
+	| T_NEWLINE STMTS
 ;
 
 SAYLIST: T_ID SEMI						{pushInStack($1,getvalue($1));}
@@ -71,8 +72,11 @@ EXPR: TERM								{$$ = $1;}
     | EXPR T_MULTIPLY EXPR				{$$ = $1 * $3;}
     | EXPR T_DIVIDE EXPR				{if($3==0)yyerror("Divide by zero not allowed!!") ;else $$ = $1 / $3;}
     | EXPR T_MOD EXPR					{if($3==0)yyerror("MOD by zero not allowed!!") ;else $$ = $1 % $3;} 
-
-
+    | EXPR T_LESS EXPR						{$$ = (int)( $1 < $3 );}
+    | EXPR T_GREATER EXPR					{$$ = (int)( $1 > $3 );}
+    | EXPR T_EQUAL EXPR						{$$ = (int)( $1 == $3 );}
+    | EXPR T_LE EXPR						{$$ = (int)( $1 <= $3 );}
+    | EXPR T_GE EXPR						{$$ = (int)( $1 >= $3 );}
 ;
  
 
@@ -132,7 +136,7 @@ int getvalue(char * name){
 }
 
 void setvalue(char * name,int val){
-	int i =0; 
+	int i =0;  
 	for(i=0;i<countVariable;i++){
 		if(strcmp(name,NameOfVariable[i] )==0 ){
 			value[i] = val; 
