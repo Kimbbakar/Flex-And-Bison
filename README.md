@@ -3,7 +3,7 @@
 
 <h3 align = "center">Lexer</h3>
 
-Total 21 types of token this lexer can recognize. 
+Various types of token this lexer can recognize. 
 
 <ol>
 
@@ -28,7 +28,7 @@ Data types:
 <li> '/'(Divide)
 <li> '%'(MOD)
 <li> ':='(Assignment) 
-</ul>
+</ul> '==', '<','<=','>','>=' (Binary Condition)
 </li>
 
 <li>We Skip space (' '), tab (\t), and new line (\n) </li>
@@ -79,8 +79,8 @@ exit;
 
 <b>Output:</b>
 ~~~
-b: 3
 a: 2
+b: 3
 a: 7
 Program End
 ~~~
